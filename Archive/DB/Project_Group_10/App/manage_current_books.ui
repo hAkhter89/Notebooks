@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LibrarianInventoryPage</class>
+ <widget class="QWidget" name="LibrarianInventoryPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Inventory Management</string>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <item>
+    <widget class="QLabel" name="titleLabel">
+     <property name="font">
+      <font>
+       <pointsize>18</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Manage Inventory</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line_1">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="searchGroupBox">
+     <property name="title">
+      <string>Search for Books</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="labelBookName">
+          <property name="text">
+           <string>Book Name:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="lineEditBookName">
+          <property name="placeholderText">
+           <string>Search by book name...</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="labelAuthor">
+          <property name="text">
+           <string>Author Name:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="comboBoxAuthorName">
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+          <item><property name="text"><string>Any</string></property></item>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="labelGenre">
+          <property name="text">
+           <string>Genre:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="comboBoxGenre">
+          <item><property name="text"><string>Any</string></property></item>
+          <item><property name="text"><string>Fiction</string></property></item>
+          <item><property name="text"><string>Science Fiction</string></property></item>
+          <item><property name="text"><string>Mystery</string></property></item>
+          <item><property name="text"><string>Fantasy</string></property></item>
+          <item><property name="text"><string>Non-Fiction</string></property></item>
+          <item><property name="text"><string>Biography</string></property></item>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_1">
+        <item>
+         <spacer name="horizontalSpacer_1">
+          <property name="orientation"><enum>Qt::Horizontal</enum></property>
+          <property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonSearch">
+          <property name="text"><string>Search</string></property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="Line" name="line_2"><property name="orientation"><enum>Qt::Horizontal</enum></property></widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelResults">
+        <property name="font">
+         <font><pointsize>10</pointsize><weight>75</weight><bold>true</bold></font>
+        </property>
+        <property name="text"><string>Search Results</string></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="tableWidgetResults">
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <property name="sortingEnabled">
+         <bool>true</bool>
+        </property>
+        <column>
+         <property name="text">
+          <string>Name</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>ISBN</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Author</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Genre</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>No. of Copies</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="manageGroupBox">
+     <property name="title">
+      <string>Manage Selected Book</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="labelSelectedBook">
+        <property name="text">
+         <string>Selected Book: None</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelCurrentCopies">
+        <property name="text">
+         <string>Current No. of Copies: 0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QPushButton" name="pushButtonIncrement">
+          <property name="text">
+           <string>+ Increment Copies</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonDecrement">
+          <property name="text">
+           <string>- Decrement Copies</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLabel" name="labelSetCopies">
+          <property name="text">
+           <string>Set No. of Copies:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="spinBoxSetCopies">
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="maximum">
+           <number>9999</number>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonUpdateCopies">
+          <property name="text">
+           <string>Update No. of Copies</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="Line" name="line_4">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonAddNewBook">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Add a New Book</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonBack">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Back to Dashboard</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
