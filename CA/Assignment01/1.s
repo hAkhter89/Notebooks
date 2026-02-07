@@ -1,54 +1,63 @@
+# Hassan Akhter // ha10609
+# CA - L3 // Husain Parvez
+
+
 .text
 .globl main
 
 main:
-    li      s0, 0x100       # s0 = Base address of array (0x100)
+ li x8, 0x100 # base address
+# initialzing the array values
+ li x20, 23
+ li x21, 12
+ li x22, 5
+ li x23, 44
+ li x24, 98
+ li x25, 53
+ li x26, 6
+ li x27, 89
+ li x28, 32
+ li x29, 65
 
-    
-    li s4, 12
-    li s5, 11
-    li s6, 99
-    li s7, 56
-    li s8, 2
+ sw x20, 0(x8)
+ sw x21, 4(x8)
+ sw x22, 8(x8)
+ sw x23, 12(x8)
+ sw x24, 16(x8)
+ sw x25, 20(x8)
+ sw x26, 24(x8)
+ sw x27, 28(x8)
+ sw x28, 32(x8)
+ sw x29, 36(x8)
 
-    sw s4, 0(s0)
-    sw s5, 4(s0)
-    sw s6, 8(s0)
-    sw s7, 12(s0)
-    sw s8, 16(s0)
-
-    li      s1, 10          # s1 = SIZE = 10
+ li x9, 10 # size = 10
 
 outer_loop:
-    li      t0, 0           # t0 = swapped (0 = false)
-    li      t1, 1           # t1 = i (1)
+ li x5, 0 # swapped = false
+ li x6, 1 # index = 1
 
 inner_loop:
-    bge     t1, s1, end_inner   # if (i >= 10) break inner loop
+ bge x6, x9, end_inner # if index > 10, exit loop
 
-    slli    t2, t1, 2       # t2 = i * 4
-    add     t3, s0, t2      # t3 = (0x100 + offset)
+ slli x7, x6, 2 # shift left for arr offset
+ add x10, x8, x7 # calculated address
 
-    # c[i] and c[i-1]
-    lw      t4, 0(t3)       # t4 = c[i]
-    lw      t5, -4(t3)      # t5 = c[i-1]
+ lw x11, 0(x10) # c[i]
+ lw x12, -4(x10) # c[i-1]
 
-    # - if (c[i-1] > c[i]) -
-    ble     t5, t4, no_swap
+ ble x12, x11, no_swap # if i-1 < i, dont swap
+ #-else
+ sw x12, 0(x10) #i = i-1 
+ sw x11, -4(x10)#i-1 = i
 
-    # --- Swap Logic ---
-    sw      t5, 0(t3)       # c[i] = old c[i-1]
-    sw      t4, -4(t3)      # c[i-1] = old c[i]
-
-    li      t0, 1           # swapped = true
+ li x5, 1 # swapped = true
 
 no_swap:
-    addi    t1, t1, 1       # i++
-    j       inner_loop      # Repeat inner loop
+ addi x6, x6, 1 # i++
+ j inner_loop #loopback
 
 end_inner:
-    # --- while (swapped); ---
-    # If swapped (t0) is not zero, jump back to outer_loop
-    bnez    t0, outer_loop
+ bnez x5, outer_loop
 
 exit:
+    j exit
