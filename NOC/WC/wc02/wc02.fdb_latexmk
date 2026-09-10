@@ -1,6 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1789059593.08737 "wc02.tex" "wc02.pdf" "wc02" 1789059594.11621 0
-  "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1775415801 3524 cb3e574dea2d1052e39280babc910dc8 ""
+["pdflatex"] 1789060649.29945 "wc02.tex" "wc02.pdf" "wc02" 1789060651.29468 0
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1775415801 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1775415801 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1775415801 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -164,13 +163,13 @@
   "/usr/share/texmf-dist/tex/latex/wasysym/wasysym.sty" 1775415801 10978 7fbfbe7bbcbe1f73acbe32ae2f10c666 ""
   "/usr/share/texmf-dist/tex/latex/xcolor/xcolor.sty" 1775415801 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1775415801 43569 fd570f2fa160877d211e859f687312ba ""
-  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1782480932 5385779 47c0c393a77fd4a098bacfd57d66b88a ""
-  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1782480853 2328191 07ed9627077268eec912d4c2777a3149 ""
-  "Annihilus.png" 1788399230 1666646 2f1ba3a2f157b8f2beda6f80460ea984 ""
-  "WhatsApp Image 2026-09-10 at 9.44.28 PM.jpeg" 1789058704.58043 41523 b182593d5e3ff693826c0d9a4a7fd8ef ""
-  "wc02.aux" 1789059594.00842 783 6aff71589305504e96d87561fb5b4efb "pdflatex"
-  "wc02.out" 1789059593.50437 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "wc02.tex" 1789059592.33631 1608 eb4ea0fca86e6bf7be668ef4707f8fd7 ""
+  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1788252572 329004 8a4e2c70a948be2237aa9cc73df4cdea ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1788252473 2328320 530ac08cef2f03d2a68a26f9491920ea ""
+  "Annihilus.png" 1789059872.26751 1666646 2f1ba3a2f157b8f2beda6f80460ea984 ""
+  "WhatsApp Image 2026-09-10 at 9.44.28 PM.jpeg" 1789059872.26876 41523 b182593d5e3ff693826c0d9a4a7fd8ef ""
+  "wc02.aux" 1789060650.93196 783 361947742e83219e08272bf9de9ec74c "pdflatex"
+  "wc02.out" 1789060650.14735 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "wc02.tex" 1789060648.08257 2002 318fde5601ab06c1d6be165634c8ce72 ""
   (generated)
   "wc02.aux"
   "wc02.log"

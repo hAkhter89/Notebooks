@@ -43,8 +43,9 @@
 		\part Define $\X(L)$, and construct a FSM (DFA) for $\X(L)$.
 		\begin{solution}
 			% Enter your solution here 
+      \\
 			$\X(L) = \{w \in \Sigma^* \mid w \in {0,1}^*$ w not in form $0^n1^m$ for n,m in Z \\
-
+      we can draw the DFA for L, then invert the accepting states to get $\X(L)$
 			\begin{center}
 				\includegraphics[width=0.95\textwidth]{./WhatsApp Image 2026-09-10 at 9.44.28 PM.jpeg}
 
@@ -56,9 +57,12 @@
 
 		\part Prove or disprove the following claim: If a language $L \subseteq \Sigma^*$ is regular then $\X(L)$ is also regular.
 		\begin{solution}
-			% Enter your solution here 
-			If $L$ is a regular DFA, then there exists another DFA $L'$ such that \\
-			$L' = (Q, \Sigma, \delta, q_0)$
+			% Enter your solution here
+      \\
+			If $L$ is a regular DFA defined $(Q, \Sigma, \delta, q_0, F)$, then there exists another DFA $L'$ such: \\
+			$L' = (Q, \Sigma, \delta, q_0, Q \setminus F)$ \\
+      This state accepts all states that are complement of L, as its accepting states are the not in set $F$ of the accepting states of L with other definitions identical. \\
+      Therefore, $w \in L' \iff \delta(q_0, w) \in Q \setminus F$  \\
 		\end{solution}
 	\end{parts}
 
