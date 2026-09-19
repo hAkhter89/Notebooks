@@ -1,11 +1,4 @@
-/* memory_leak.c  --  Task 5(a)
- *
- * Two leaks on purpose: one in main, one inside a helper function.
- * Expected valgrind report: 600 bytes in 2 blocks definitely lost.
- *
- *   gcc -Wall -Wextra -g -O0 memory_leak.c -o memory_leak
- *   valgrind --leak-check=full --show-leak-kinds=all ./memory_leak
- */
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,7 +29,7 @@ int main(void)
 
     leak_inside_a_function();
 
-    /* We intentionally forget to free() here. */
-    printf("Program finished, but memory was not deallocated.\n");
+    /* no free() here. */
+    printf("Program, finished, memory was not deallocated.\n");
     return 0;
 }

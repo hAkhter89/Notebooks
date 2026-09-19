@@ -5,9 +5,9 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-/* ------------------------------------------------------------------ */
-/* Task 7: the block header                                            */
-/* ------------------------------------------------------------------ */
+
+//block header
+
 
 typedef struct MemBlock {
     size_t            size;      /* usable bytes AFTER this header      */
