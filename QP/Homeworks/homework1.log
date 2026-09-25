@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.9.24)  25 SEP 2026 14:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.6.26)  25 SEP 2026 20:38
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -470,90 +470,95 @@ Underfull \hbox (badness 10000) in paragraph at lines 219--223
 
  []
 
-[3 <./Bloch-Sphere.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 299--302
+[3 <./Bloch-Sphere.png>] [4]
+Underfull \hbox (badness 10000) in paragraph at lines 311--314
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 304--305
+Underfull \hbox (badness 10000) in paragraph at lines 316--317
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 306--308
+Underfull \hbox (badness 10000) in paragraph at lines 318--320
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 309--310
+Underfull \hbox (badness 10000) in paragraph at lines 321--322
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 311--312
+Underfull \hbox (badness 10000) in paragraph at lines 323--324
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 313--316
+Underfull \hbox (badness 10000) in paragraph at lines 325--328
 
  []
 
-[4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 369--370
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 371--372
+[5] [6]
+Underfull \hbox (badness 10000) in paragraph at lines 381--382
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 375--376
+Underfull \hbox (badness 10000) in paragraph at lines 383--384
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 377--379
+Underfull \hbox (badness 10000) in paragraph at lines 387--388
 
  []
 
 
-Overfull \hbox (21.83255pt too wide) in paragraph at lines 380--381
+Underfull \hbox (badness 10000) in paragraph at lines 389--391
+
+ []
+
+
+Overfull \hbox (21.83255pt too wide) in paragraph at lines 392--393
 []$\OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 YV \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 ^^@ [] [] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 ^^@ [] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 ^^@ [] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 ^^@ [] \OT1/cmr/m/n/10 =
  []
 
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 396--397
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 408--409
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 408--412
+Overfull \hbox (1.97453pt too wide) in paragraph at lines 420--423
+\OT1/cmr/m/n/10 The Qubit $[] [] + []\OML/cmm/m/it/10 i []$ \OT1/cmr/m/n/10 coll-pases upon its ba-sis state as per the fol-low-ing prob-a-bil-i-ties. $\OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 \OMS/cmsy/m/n/10 j[] \OT1/cmr/m/n/10 = 1\OML/cmm/m/it/10 =\OT1/cmr/m/n/10 4([])\OML/cmm/m/it/10 ; \OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 ^^L\OMS/cmsy/m/n/10 j[] \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 420--423
 
  []
 
-[7] (./homework1.aux)
+[8] (./homework1.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 14345 strings out of 469503
- 290181 string characters out of 5470408
- 678762 words of memory out of 5000000
- 42749 multiletter control sequences out of 15000+600000
+ 14345 strings out of 469515
+ 290181 string characters out of 5470807
+ 686692 words of memory out of 5000000
+ 42744 multiletter control sequences out of 15000+600000
  636536 words of font info for 74 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 102i,11n,107p,480b,819s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,12n,107p,481b,819s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on homework1.pdf (7 pages, 216305 bytes).
+Output written on homework1.pdf (8 pages, 219115 bytes).
 PDF statistics:
- 107 PDF objects out of 1000 (max. 8388607)
- 66 compressed objects within 1 object stream
+ 110 PDF objects out of 1000 (max. 8388607)
+ 68 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  18 words of extra memory for PDF output out of 10000 (max. 10000000)
 
