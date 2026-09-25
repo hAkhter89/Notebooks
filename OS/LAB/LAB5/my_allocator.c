@@ -1,240 +1,200 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdint.h>
 #include <sys/mman.h>
 #include <unistd.h>
 
+typedef struct Block {
+  size_t size;
+  int free;
+  struct Block *next;
+} Block;
 
-//block header
+#define ALIGNMENT 16
+#define CHUNK_SIZE 65536
 
+Block *head = NULL;
 
-typedef struct MemBlock {
-    size_t            size;      /* usable bytes AFTER this header      */
-    int               is_free;   /* 0 = allocated, 1 = free             */
-    struct MemBlock  *next;      /* next block in the global list       */
-} MemBlock;
-
-/* The payload starts right after the header, so the header size decides
- * the alignment of every pointer we hand out. sizeof(MemBlock) is 24 on
- * x86-64, which is not a multiple of 16, so round it up. malloc must
- * return memory aligned for any type; 16 covers long double and SSE.   */
-#define ALIGNMENT      16UL
-#define ALIGN_UP(x, a) (((size_t)(x) + (a) - 1) & ~((size_t)(a) - 1))
-#define HEADER_SIZE    (ALIGN_UP(sizeof(MemBlock), ALIGNMENT))
-#define MIN_PAYLOAD    ALIGNMENT
-#define CHUNK_SIZE     (64UL * 1024UL)   /* grab 64 KiB at a time from the OS */
-
-static MemBlock *head = NULL;            /* start of the block list */
-
-/* ------------------------------------------------------------------ */
-/* helpers                                                             */
-/* ------------------------------------------------------------------ */
-
-static size_t page_size(void)
-{
-    static size_t ps = 0;
-    if (ps == 0) ps = (size_t) sysconf(_SC_PAGESIZE);
-    return ps;
+/* Round size to a multiple of 16. */
+size_t align_size(size_t size) {
+  return (size + ALIGNMENT - 1) & ~(ALIGNMENT - 1);
 }
 
-/* Are these two blocks physically next to each other? Two blocks can be
- * neighbours in the linked list but live in different mmap chunks, and
- * merging those would produce a block that spans unmapped memory.      */
-static int adjacent(const MemBlock *a, const MemBlock *b)
-{
-    return (const char *) a + HEADER_SIZE + a->size == (const char *) b;
+size_t header_size(void) { return align_size(sizeof(Block)); }
+
+/* Check whether two blocks are physically next to each other in memory. */
+int adjacent(Block *a, Block *b) {
+  return (char *)a + header_size() + a->size == (char *)b;
 }
 
-/* Task 8 (c.1): ask the kernel for more memory and append it as one big
- * free block at the tail of the list.                                  */
-static MemBlock *request_from_os(size_t need)
-{
-    size_t total = ALIGN_UP(HEADER_SIZE + need, page_size());
-    if (total < CHUNK_SIZE) total = CHUNK_SIZE;
+/* Ask the operating system for a new chunk of memory using mmap(). */
+Block *request_memory(size_t size) {
+  size_t total = header_size() + size;
 
-    void *mem = mmap(NULL, total, PROT_READ | PROT_WRITE,
-                     MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-    if (mem == MAP_FAILED) return NULL;          /* OS call failed */
+  /* Get at least 64 KiB so we can reuse the memory for future allocations. */
+  if (total < CHUNK_SIZE)
+    total = CHUNK_SIZE;
 
-    MemBlock *block = (MemBlock *) mem;
-    block->size    = total - HEADER_SIZE;
-    block->is_free = 1;
-    block->next    = NULL;
+  total = (total + 4095) & ~4095UL;
 
-    if (head == NULL) {
-        head = block;
-    } else {
-        MemBlock *cur = head;
-        while (cur->next != NULL) cur = cur->next;
-        cur->next = block;
-    }
+  void *memory = mmap(NULL, total, PROT_READ | PROT_WRITE,
+                      MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 
-    printf("      [os] mmap %6zu bytes at %p\n", total, mem);
-    return block;
+  if (memory == MAP_FAILED)
+    return NULL;
+
+  /* The beginning of the mmap memory becomes block header. */
+  Block *block = memory;
+
+  block->size = total - header_size();
+  block->free = 1;
+  block->next = NULL;
+
+  if (head == NULL) {
+    head = block;
+  } else {
+    Block *current = head;
+
+    while (current->next != NULL)
+      current = current->next;
+
+    current->next = block;
+  }
+
+  return block;
 }
 
-/* Task 8 (b.1): if the block is much larger than requested, cut it in two
- * and leave the tail free. Only split when the leftover can hold a header
- * plus a useful payload, otherwise we create unusable slivers.         */
-static void split_block(MemBlock *block, size_t size)
-{
-    if (block->size < size + HEADER_SIZE + MIN_PAYLOAD)
-        return;
+void split_block(Block *block, size_t size) {
+  /*
+   * Only split if the remaining space is large enough for
+   * another header and some usable memory.
+   */
+  if (block->size < size + header_size() + ALIGNMENT)
+    return;
 
-    MemBlock *rest = (MemBlock *) ((char *) block + HEADER_SIZE + size);
-    rest->size    = block->size - size - HEADER_SIZE;
-    rest->is_free = 1;
-    rest->next    = block->next;
+  Block *new_block = (Block *)((char *)block + header_size() + size);
 
-    block->size = size;
-    block->next = rest;
+  new_block->size = block->size - size - header_size();
+  new_block->free = 1;
+  new_block->next = block->next;
+
+  block->size = size;
+  block->next = new_block;
 }
 
-/* ------------------------------------------------------------------ */
-/* Task 8: my_malloc                                                    */
-/* ------------------------------------------------------------------ */
+void *my_malloc(size_t size) {
+  if (size == 0)
+    return NULL;
 
-void *my_malloc(size_t size)
-{
-    if (size == 0) return NULL;                 /* edge case */
+  size = align_size(size);
 
-    size = ALIGN_UP(size, ALIGNMENT);
+  // find the first free block that is large enough.
+  Block *current = head;
 
-    /* (a) first fit: walk the list looking for a free block big enough */
-    MemBlock *cur = head;
-    while (cur != NULL) {
-        if (cur->is_free && cur->size >= size) break;
-        cur = cur->next;
-    }
+  while (current != NULL) {
+    if (current->free && current->size >= size)
+      break;
 
-    /* (c.1) nothing suitable: get a fresh chunk from the kernel */
-    if (cur == NULL) {
-        cur = request_from_os(size);
-        if (cur == NULL) return NULL;           /* OS call failed */
-    }
+    current = current->next;
+  }
 
-    split_block(cur, size);                     /* (b.1) */
-    cur->is_free = 0;                           /* (b.2) */
-    return (char *) cur + HEADER_SIZE;          /* (b.3) usable memory */
+  /*
+   * No suitable free block exists, so request more memory
+   * from the operating system.
+   */
+  if (current == NULL) {
+    current = request_memory(size);
+
+    if (current == NULL)
+      return NULL;
+  }
+
+  split_block(current, size);
+
+  current->free = 0;
+
+  /*
+   * The user receives the memory after the header.
+   */
+  return (char *)current + header_size();
 }
 
-/* ------------------------------------------------------------------ */
-/* Task 9: my_free                                                      */
-/* ------------------------------------------------------------------ */
+void my_free(void *ptr) {
+  if (ptr == NULL)
+    return;
 
-void my_free(void *ptr)
-{
-    if (ptr == NULL) return;                    /* edge case: free(NULL) */
+  Block *block = (Block *)((char *)ptr - header_size());
 
-    /* (a) step back over the header to find the block record */
-    MemBlock *block = (MemBlock *) ((char *) ptr - HEADER_SIZE);
+  block->free = 1;
 
-    /* (b) mark it free */
-    block->is_free = 1;
+  while (block->next != NULL && block->next->free &&
+         adjacent(block, block->next)) {
 
-    /* (c) coalescing, forwards: swallow every free neighbour that sits
-     *     immediately after this one.                                   */
-    while (block->next != NULL && block->next->is_free &&
-           adjacent(block, block->next)) {
-        block->size += HEADER_SIZE + block->next->size;
-        block->next  = block->next->next;
-    }
+    block->size += header_size() + block->next->size;
+    block->next = block->next->next;
+  }
 
-    /* Coalescing backwards. The lab only asks for the forward merge, but
-     * without this you still fragment: free(A) then free(B) where B sits
-     * before A in memory would leave two separate free blocks.          */
-    MemBlock *prev = NULL, *cur = head;
-    while (cur != NULL && cur != block) { prev = cur; cur = cur->next; }
-    if (prev != NULL && prev->is_free && adjacent(prev, block)) {
-        prev->size += HEADER_SIZE + block->size;
-        prev->next  = block->next;
-    }
+  Block *previous = NULL;
+  Block *current = head;
+
+  while (current != NULL && current != block) {
+    previous = current;
+    current = current->next;
+  }
+
+  if (previous != NULL && previous->free && adjacent(previous, block)) {
+
+    previous->size += header_size() + block->size;
+    previous->next = block->next;
+  }
 }
 
-/* ------------------------------------------------------------------ */
-/* Task 10: tests                                                       */
-/* ------------------------------------------------------------------ */
+/* Print heap/list. */
+void print_blocks(void) {
+  Block *current = head;
+  int i = 0;
 
-static void dump_heap(const char *label)
-{
-    printf("\n--- %s ---\n", label);
-    int i = 0;
-    size_t free_bytes = 0, used_bytes = 0;
-    for (MemBlock *cur = head; cur != NULL; cur = cur->next, i++) {
-        printf("  block %-2d hdr=%p payload=%p size=%7zu  %s\n",
-               i, (void *) cur, (void *) ((char *) cur + HEADER_SIZE),
-               cur->size, cur->is_free ? "FREE" : "USED");
-        if (cur->is_free) free_bytes += cur->size; else used_bytes += cur->size;
-    }
-    printf("  (%d block(s), %zu bytes used, %zu bytes free)\n",
-           i, used_bytes, free_bytes);
+  printf("\nHeap blocks:\n");
+
+  while (current != NULL) {
+    printf("Block %d: address=%p size=%zu %s\n", i, (void *)current,
+           current->size, current->free ? "FREE" : "USED");
+
+    current = current->next;
+    i++;
+  }
 }
 
-int main(void)
-{
-    printf("sizeof(MemBlock) = %zu, HEADER_SIZE (aligned) = %zu\n",
-           sizeof(MemBlock), HEADER_SIZE);
+int main(void) {
+  printf("Header size: %zu bytes\n", header_size());
 
-    /* ---------- (a) normal cases ---------- */
+  printf("\nAllocating memory...\n");
 
-    puts("\n=== 1. allocate small / medium / large ===");
-    char *small  = my_malloc(32);
-    char *medium = my_malloc(500);
-    char *large  = my_malloc(4000);
-    printf("  small  = %p\n  medium = %p\n  large  = %p\n",
-           (void *) small, (void *) medium, (void *) large);
+  char *a = my_malloc(32);
+  char *b = my_malloc(100);
+  char *c = my_malloc(200);
 
-    strcpy(small, "hello allocator");
-    memset(medium, 'A', 500);
-    memset(large,  'B', 4000);
-    printf("  small holds: \"%s\"\n", small);
-    dump_heap("after 3 allocations");
+  strcpy(a, "Hello allocator!");
+  strcpy(b, "This is block B.");
+  strcpy(c, "This is block C.");
 
-    puts("\n=== 2. free in REVERSE order of allocation ===");
-    my_free(large);
-    my_free(medium);
-    my_free(small);
-    dump_heap("after freeing large, medium, small");
-    puts("  everything coalesced back into one big free block.");
+  printf("a: %s\n", a);
+  printf("b: %s\n", b);
+  printf("c: %s\n", c);
 
-    puts("\n=== 3. reuse check: allocate again, expect no new mmap ===");
-    char *again = my_malloc(32);
-    printf("  my_malloc(32) = %p   (first time it was %p)\n",
-           (void *) again, (void *) small);
-    printf("  reused the freed space: %s\n", again == small ? "YES" : "NO");
-    my_free(again);
+  print_blocks();
 
-    puts("\n=== 4. free in MIXED order ===");
-    void *a = my_malloc(64);
-    void *b = my_malloc(128);
-    void *c = my_malloc(256);
-    dump_heap("allocated a, b, c");
+  printf("\nFreeing b\n");
+  my_free(b);
+  print_blocks();
 
-    my_free(b);                       /* hole in the middle */
-    dump_heap("freed b (middle) - note the hole: fragmentation");
+  printf("\nFreeing a\n");
+  my_free(a);
+  print_blocks();
 
-    my_free(a);                       /* should merge with b's hole */
-    dump_heap("freed a - a and b coalesce");
+  printf("\nFreeing c\n");
+  my_free(c);
+  print_blocks();
 
-    my_free(c);                       /* should merge with everything */
-    dump_heap("freed c - one free block again");
-
-    /* ---------- (b) bad cases ---------- */
-
-    puts("\n=== 5. edge cases ===");
-    void *zero = my_malloc(0);
-    printf("  my_malloc(0)  -> %p  (expected (nil))\n", zero);
-
-    my_free(NULL);
-    puts("  my_free(NULL) -> returned without crashing");
-
-    void *huge = my_malloc((size_t) -1 / 2);   /* absurd request */
-    printf("  my_malloc(huge) -> %p  (expected (nil), mmap refuses)\n", huge);
-
-    dump_heap("final state");
-
-    puts("\nNote: this allocator never munmaps. Real free() is allowed to\n"
-         "return memory to the kernel, but it usually keeps it too.");
-    return 0;
+  return 0;
 }

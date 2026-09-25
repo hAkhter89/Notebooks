@@ -1,0 +1,99 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+
+\title{Memory API in UNIX Systems}
+\subtitle{Allocating and Managing Memory in C}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}[fragile]{Types of Memory in C}
+    \begin{itemize}
+        \item \textbf{Stack (Automatic) Memory:} Allocations and deallocations are managed implicitly by the compiler. %[cite: 1]
+        \item Space is made upon function call and deallocated on return. %[cite: 1]
+        \item \textbf{Heap Memory:} All allocations and deallocations are explicitly handled by the programmer, providing a way to store long-lived memory. %[cite: 1]
+    \end{itemize}
+    \vspace{0.3cm}
+    \begin{block}{Code Example: Stack vs. Heap} %[cite: 1]
+\begin{verbatim}
+// Automatically managed on the stack
+int x = 5; 
+
+// Safely allocating on the heap
+int *arr = malloc(10 * sizeof(int)); 
+\end{verbatim}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Allocating Memory: \texttt{malloc()}}
+    \begin{itemize}
+        \item The \texttt{malloc(size\_t size)} call takes the number of bytes needed and returns a pointer to the newly-allocated space, or \texttt{NULL} on failure. %[cite: 1]
+        \item \textbf{Best Practice:} Use \texttt{sizeof()} as a compile-time operator instead of hardcoding sizes (e.g., \texttt{malloc(40)}). %[cite: 1]
+        \item \textbf{String Allocation:} Use \texttt{strlen(s) + 1} to make room for the end-of-string character, as \texttt{sizeof()} will not work correctly for strings. %[cite: 1]
+    \end{itemize}
+    \vspace{0.3cm}
+    \begin{block}{Code Example: Allocation Types} %[cite: 1]
+\begin{verbatim}
+// Specific allocation for 10 integers
+int *arr = malloc(10 * sizeof(int));
+
+// +1 makes room for the null terminator
+char *str = malloc(strlen(name) + 1);
+\end{verbatim}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Deallocating Memory: \texttt{free()}}
+    \begin{itemize}
+        \item To free heap memory no longer in use, call \texttt{free()} and pass it the pointer returned by \texttt{malloc()}. %[cite: 1]
+        \item The size of the allocated region is tracked internally by the memory-allocation library, so the user does not need to pass it. %[cite: 1]
+        \item While the OS reclaims all process memory when a program exits, programmers should maintain the habit of explicitly freeing memory to avoid poor form. %[cite: 1]
+    \end{itemize}
+    \vspace{0.3cm}
+    \begin{block}{Code Example: Proper Deallocation} %[cite: 1]
+\begin{verbatim}
+int *arr = malloc(10 * sizeof(int));
+
+// Giving the memory back to the system
+free(arr); 
+\end{verbatim}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Common Memory Errors}
+    \begin{itemize}
+        \item \textbf{Segmentation Faults:} Passing unallocated pointers to routines like \texttt{strcpy()} causes illegal memory access and crashes. %[cite: 1]
+        \item \textbf{Buffer Overflows:} Not allocating enough memory (e.g., forgetting the +1 for a string), which can silently overwrite contiguous blocks of important memory. %[cite: 1]
+        \item \textbf{Memory Leaks:} Forgetting to free memory, which eats up RAM and eventually crashes the system. %[cite: 1]
+        \item \textbf{Dangling Pointers:} Freeing memory too early or multiple times confuses the allocation library. %[cite: 1]
+    \end{itemize}
+    \vspace{0.2cm}
+    \begin{block}{Code Example: Memory Leak}
+\begin{verbatim}
+while(1) { 
+    malloc(1024); // Classic example of a memory leak
+}
+\end{verbatim}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Underlying OS Support \& Advanced APIs}
+    \begin{itemize}
+        \item \texttt{malloc()} and \texttt{free()} are not system calls, but library calls built on top of OS system calls. %[cite: 1]
+        \item \textbf{Heap Boundary Control:} System calls \texttt{brk()} and \texttt{sbrk()} extend or shrink the heap of the process in main memory. %[cite: 1]
+        \item You should never call these directly; the libraries manage it well. %[cite: 1]
+        \item \textbf{Virtual RAM / Swap:} The \texttt{mmap(...)} call can map anonymous memory to swap space to prevent your system from crashing if it runs out of main memory. %[cite: 1]
+        \item \textbf{Advanced Library Functions:}
+        \begin{itemize}
+            \item \texttt{calloc()}: Allocates memory and zeroes it out. %[cite: 1]
+            \item \texttt{realloc()}: Resizes an existing memory region. %[cite: 1]
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\end{document}

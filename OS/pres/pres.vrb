@@ -1,0 +1,12 @@
+\frametitle{Underlying OS Support \& Advanced APIs}
+\begin{itemize}
+        \item \texttt{malloc()} and \texttt{free()} are not system calls, but library calls built on top of OS system calls. %[cite: 1]
+        \item \textbf{Heap Boundary Control:} System calls \texttt{brk()} and \texttt{sbrk()} extend or shrink the heap of the process in main memory. %[cite: 1]
+        \item You should never call these directly; the libraries manage it well. %[cite: 1]
+        \item \textbf{Virtual RAM / Swap:} The \texttt{mmap(...)} call can map anonymous memory to swap space to prevent your system from crashing if it runs out of main memory. %[cite: 1]
+        \item \textbf{Advanced Library Functions:}
+        \begin{itemize}
+            \item \texttt{calloc()}: Allocates memory and zeroes it out. %[cite: 1]
+            \item \texttt{realloc()}: Resizes an existing memory region. %[cite: 1]
+        \end{itemize}
+    \end{itemize}
