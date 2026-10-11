@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.9.24)  11 OCT 2026 18:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.9.24)  11 OCT 2026 23:10
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -142,27 +142,67 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 10.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 15.
- [1
+<1.png, id=1, 590.205pt x 339.51843pt>
+File: 1.png Graphic file (type png)
+<use 1.png>
+Package pdftex.def Info: 1.png  used on input line 31.
+(pdftex.def)             Requested size: 211.38832pt x 121.59967pt.
+<2.png, id=2, 672.26157pt x 352.31625pt>
+File: 2.png Graphic file (type png)
+<use 2.png>
+Package pdftex.def Info: 2.png  used on input line 32.
+(pdftex.def)             Requested size: 211.38832pt x 110.7813pt.
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] (./report.aux)
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<3.png, id=3, 970.3753pt x 479.54156pt>
+File: 3.png Graphic file (type png)
+<use 3.png>
+Package pdftex.def Info: 3.png  used on input line 65.
+(pdftex.def)             Requested size: 352.31625pt x 174.1129pt.
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <./1.png (PNG copy)> <./2.png (PNG copy)>]
+<4.png, id=23, 976.39781pt x 383.18156pt>
+File: 4.png Graphic file (type png)
+<use 4.png>
+Package pdftex.def Info: 4.png  used on input line 68.
+(pdftex.def)             Requested size: 352.31625pt x 138.26683pt.
+ [2 <./3.png (PNG copy)> <./4.png (PNG copy)>]
+<5.png, id=27, 955.31906pt x 391.4625pt>
+File: 5.png Graphic file (type png)
+<use 5.png>
+Package pdftex.def Info: 5.png  used on input line 71.
+(pdftex.def)             Requested size: 352.31625pt x 144.36696pt.
+<6.png, id=28, 995.21812pt x 419.31656pt>
+File: 6.png Graphic file (type png)
+<use 6.png>
+Package pdftex.def Info: 6.png  used on input line 75.
+(pdftex.def)             Requested size: 352.31625pt x 148.44572pt.
+ [3 <./5.png (PNG copy)> <./6.png (PNG copy)>]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[4] [5] (./report.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 1875 strings out of 469503
- 29329 string characters out of 5470408
- 448756 words of memory out of 5000000
- 30556 multiletter control sequences out of 15000+600000
+ 1918 strings out of 469503
+ 29845 string characters out of 5470408
+ 445756 words of memory out of 5000000
+ 30599 multiletter control sequences out of 15000+600000
  633401 words of font info for 59 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 57i,9n,65p,481b,263s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,9n,65p,476b,270s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on report.pdf (2 pages, 162644 bytes).
+Output written on report.pdf (5 pages, 653954 bytes).
 PDF statistics:
- 82 PDF objects out of 1000 (max. 8388607)
- 49 compressed objects within 1 object stream
+ 97 PDF objects out of 1000 (max. 8388607)
+ 55 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

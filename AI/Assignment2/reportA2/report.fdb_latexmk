@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1791724608.80393 "report.tex" "report.pdf" "report" 1791724609.44793 0
+["pdflatex"] 1791742245.5021 "report.tex" "report.pdf" "report" 1791742246.03488 0
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1775415801 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1775415801 1536 02c06700a42be0f5a28664c7273f82e7 ""
   "/usr/share/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1775415801 1328 c834bbb027764024c09d3d2bf908b5f0 ""
@@ -49,8 +49,14 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1775415801 43569 fd570f2fa160877d211e859f687312ba ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1790232486 329276 3b34208eb964522329c8f0416a1efc9e ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1790232356 2328323 ef188578d6bc44f5c93d56a3c301f33e ""
-  "report.aux" 1791724609.35087 601 a26ce4dbe074ee8c89c8e4f9474c198c "pdflatex"
-  "report.tex" 1791724607.02806 4935 781785866e2f3cbe0ad69ad7204256f8 ""
+  "1.png" 1791740063.64552 23593 bf06ed0a77f02bd5a667fcf9b306bcc4 ""
+  "2.png" 1791740063.64652 54123 173a6e4bed7442d9cceb5539309cd2f5 ""
+  "3.png" 1791740063.64752 117894 238420420034ef4a8f5fe96314d347bd ""
+  "4.png" 1791740063.64752 93122 ce3a21b5bf77db73430c5b6aadf83cea ""
+  "5.png" 1791740063.64952 90061 6222cec3733fa17c84c8f6e068209a91 ""
+  "6.png" 1791740063.65052 100817 ea1d157e04e31a70c05b6bcc544e348f ""
+  "report.aux" 1791742245.92678 824 fa00da9720231b79d648610036d8d223 "pdflatex"
+  "report.tex" 1791742065.86153 9464 5d067f572cbf987d6c8ef65b67eb4258 ""
   (generated)
   "report.aux"
   "report.log"
